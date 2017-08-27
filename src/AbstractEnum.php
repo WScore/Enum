@@ -112,7 +112,10 @@ abstract class AbstractEnum implements EnumInterface
      */
     public function is($value)
     {
-        return $this->value === (string)$value;
+        if (is_null($this->value)) {
+            throw new \BadMethodCallException('no value defined. ');
+        }
+        return $this->value === $this->mutate($value);
     }
 
     /**
@@ -129,6 +132,9 @@ abstract class AbstractEnum implements EnumInterface
      */
     public function label()
     {
+        if (is_null($this->value)) {
+            throw new \BadMethodCallException('no value defined. ');
+        }
         return $this->valueList[$this->value];
     }
 
@@ -137,6 +143,9 @@ abstract class AbstractEnum implements EnumInterface
      */
     public function value()
     {
+        if (is_null($this->value)) {
+            throw new \BadMethodCallException('no value defined. ');
+        }
         return (string) $this->value;
     }
 
@@ -149,8 +158,8 @@ abstract class AbstractEnum implements EnumInterface
     }
 
     /**
-     * 文字列から値を取得する。
-     * コンスタント名、値、そして名称から検索する。
+     * find value from a string. 
+     * searches for: key of static::$choices, value of static::$choices, and constant name. 
      *
      * @param string $label
      * @return int|string

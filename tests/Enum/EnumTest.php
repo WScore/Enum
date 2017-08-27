@@ -23,6 +23,17 @@ class EnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @expectedException \BadMethodCallException
+     */
+    public function emptyInstanceThrowsExceptionsIf()
+    {
+        $empty = EnumList::getEmptyInstance();
+
+        $this->assertEquals('', $empty->value());
+    }
+
+    /**
+     * @test
      * @expectedException \InvalidArgumentException
      */
     public function usingInvalidValueThrowsAnException()
