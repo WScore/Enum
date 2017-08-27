@@ -2,9 +2,8 @@
 namespace Tests\Enum\Stubs;
 
 use WScore\Enum\AbstractEnumList;
-use WScore\Enum\Enum;
 
-class EnumValue extends AbstractEnumList
+class EnumList extends AbstractEnumList
 {
     const ENUM = 'enum';
     const VALUE = 'value';
@@ -16,12 +15,12 @@ class EnumValue extends AbstractEnumList
 
     /**
      * @param string $value
-     * @return Enum
+     * @return EnumVal
      */
     public static function getEnum($value)
     {
         $choices = self::$choices;
         unset($choices[self::VALUE]);
-        return new Enum($value, $choices);
+        return new EnumVal($value, $choices);
     }
 }

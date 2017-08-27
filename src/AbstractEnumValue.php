@@ -18,6 +18,7 @@ abstract class AbstractEnumValue implements EnumInterface
      * TaskStatus constructor.
      *
      * @param string $value
+     * @param array  $choices
      */
     public function __construct($value, array $choices)
     {
