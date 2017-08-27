@@ -4,9 +4,15 @@ namespace WScore\Enum;
 interface EnumInterface
 {
     /**
-     * @return array
+     * @param string $value
+     * @return static
      */
-    public function flipped();
+    public static function enum($value);
+
+    /**
+     * @return static
+     */
+    public static function getEmptyInstance();
 
     /**
      * @return array
@@ -14,10 +20,9 @@ interface EnumInterface
     public function choices();
 
     /**
-     * @param string $value
-     * @return bool
+     * @return array
      */
-    public function isDefined($value);
+    public function flipped();
 
     /**
      * @param string $value
@@ -26,9 +31,20 @@ interface EnumInterface
     public function is($value);
 
     /**
+     * @param string $value
+     * @return bool
+     */
+    public function isDefined($value);
+
+    /**
      * @return string
      */
     public function label();
+
+    /**
+     * @return string
+     */
+    public function value();
 
     /**
      * @return string

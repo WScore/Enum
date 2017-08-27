@@ -7,27 +7,46 @@ require_once( dirname( __DIR__ ) . '/autoloader.php' );
 
 class EnumTest extends \PHPUnit_Framework_TestCase
 {
-    public function testEnumList()
+    /**
+     * @test
+     */
+    public function callingStaticMethods()
     {
-        $this->assertTrue(EnumList::isDefined(EnumList::ENUM));
-        $this->assertTrue(EnumList::isDefined(EnumList::VALUE));
-        $this->assertFalse(EnumList::isDefined('bad'));
+        $empty = EnumList::getEmptyInstance();
+        $this->assertTrue($empty->isDefined(EnumList::ENUM));
+        $this->assertTrue($empty->isDefined(EnumList::VALUE));
+        $this->assertFalse($empty->isDefined('bad'));
         
-        $this->assertEquals(2, count(EnumList::choices()));
-        $this->assertEquals(2, count(EnumList::flipped()));
+        $this->assertEquals(2, count($empty->choices()));
+        $this->assertEquals(2, count($empty->flipped()));
     }
-    
-    public function testUndocumentedFeature_FindValue()
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function usingInvalidValueThrowsAnException()
+    {
+        EnumList::enum('bad value');
+    }
+
+    /**
+     * @test
+     */
+    public function undocumentedFeature_FindValue()
     {
         $this->assertEquals('enum', EnumList::findValue('enumerated'));
         $this->assertEquals('enum', EnumList::findValue('ENUM'));
         $this->assertEquals('enum', EnumList::findValue('enum'));
     }
-    
-    public function testEnumValue()
+
+    /**
+     * @test
+     */
+    public function enumeratedObject()
     {
         $enum = EnumList::enum(EnumList::ENUM);
-        $this->assertEquals('WScore\Enum\Enum', get_class($enum));
+        $this->assertEquals('Tests\Enum\Stubs\EnumList', get_class($enum));
         $this->assertEquals('enumerated', $enum->label());
         $this->assertEquals('enum', (string) $enum);
         $this->assertTrue($enum->is(EnumList::ENUM));
