@@ -12,24 +12,12 @@ class EnumTest extends \PHPUnit_Framework_TestCase
      */
     public function callingStaticMethods()
     {
-        $empty = EnumList::getEmptyInstance();
-        $this->assertTrue($empty->isDefined(EnumList::ENUM));
-        $this->assertTrue($empty->isDefined(EnumList::VALUE));
-        $this->assertFalse($empty->isDefined('bad'));
+        $this->assertTrue(EnumList::isDefined(EnumList::ENUM));
+        $this->assertTrue(EnumList::isDefined(EnumList::VALUE));
+        $this->assertFalse(EnumList::isDefined('bad'));
         
-        $this->assertEquals(2, count($empty->choices()));
-        $this->assertEquals(2, count($empty->flipped()));
-    }
-
-    /**
-     * @test
-     * @expectedException \BadMethodCallException
-     */
-    public function emptyInstanceThrowsExceptionsIf()
-    {
-        $empty = EnumList::getEmptyInstance();
-
-        $this->assertEquals('', $empty->value());
+        $this->assertEquals(2, count(EnumList::choices()));
+        $this->assertEquals(2, count(EnumList::flipped()));
     }
 
     /**
@@ -62,13 +50,20 @@ class EnumTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('enum', (string) $enum);
         $this->assertTrue($enum->is(EnumList::ENUM));
         $this->assertFalse($enum->is(EnumList::VALUE));
-        $this->assertEquals(2, count($enum->choices()));
-        $this->assertEquals(2, count($enum->flipped()));
+        $this->assertEquals(2, count($enum::choices()));
+        $this->assertEquals(2, count($enum::flipped()));
         
         $enum = EnumList::getEnum(EnumList::ENUM);
         $this->assertTrue($enum->is(EnumList::ENUM));
-        $this->assertFalse($enum->isDefined(EnumList::VALUE));
-        $this->assertEquals(1, count($enum->choices()));
         $this->assertTrue($enum->isEnum());
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function enum()
+    {
+        EnumList::getEnum(EnumList::VALUE);
     }
 }

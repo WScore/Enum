@@ -3,6 +3,9 @@ namespace WScore\Enum;
 
 interface EnumInterface
 {
+    // ------------------------------------------------------------------------
+    // static methods
+    // ------------------------------------------------------------------------
     /**
      * @param string $value
      * @return static
@@ -10,31 +13,35 @@ interface EnumInterface
     public static function enum($value);
 
     /**
-     * @return static
+     * @return array
      */
-    public static function getEmptyInstance();
+    public static function choices();
 
     /**
      * @return array
      */
-    public function choices();
+    public static function flipped();
 
     /**
+     * @param array $choices
      * @return array
      */
-    public function flipped();
+    public static function flip(array $choices);
 
+    /**
+     * @param string $value
+     * @return bool
+     */
+    public static function isDefined($value);
+
+    // ------------------------------------------------------------------------
+    // instance methods
+    // ------------------------------------------------------------------------
     /**
      * @param string $value
      * @return bool
      */
     public function is($value);
-
-    /**
-     * @param string $value
-     * @return bool
-     */
-    public function isDefined($value);
 
     /**
      * @return string

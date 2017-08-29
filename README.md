@@ -35,19 +35,7 @@ $enum = EnumList::enum(EnumList::ENUM);
 $enum->label(); // enumerated
 $enum->is(EnumList::ENUM); // true
 ```
-
-#### 3. get empty instance
-
-sometimes, one might want to access to the default `static::$choices` 
-to check if certain value is defined. 
-
-```php
-$empty = EnumList::getEmptyInstance(EnumList::ENUM);
-$empty->choices(); // array of choices
-$empty->isDefined(EnumList::ENUM); // true
-```
-
-#### 4. subset of choices
+#### 3. subset of choices
 
 sometimes, one might want to limit choices to the subset of 
 the original `static::$choices`.
@@ -80,5 +68,5 @@ class EnumList extends AbstractEnum
 then, the following code will throw an \InvalidArgumentException. 
 
 ```php
-$enum = EnumList::enum(EnumList::VALUE);
+$enum = EnumList::getEnum(EnumList::VALUE);
 ```

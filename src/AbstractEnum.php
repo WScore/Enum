@@ -26,11 +26,11 @@ abstract class AbstractEnum implements EnumInterface
      * @param string $value
      * @param array  $choices
      */
-    public function __construct($value, array $choices)
+    public function __construct($value, array $choices = [])
     {
-        $this->valueList = $choices;
+        $this->valueList = $choices ?: static::$choices;
         $value           = $this->mutate($value);
-        if (!$this->isDefined($value)) {
+        if (!isset($choices[$value])) {
             throw new \InvalidArgumentException(get_called_class() . ' has no such value: ' . $value);
         }
         $this->value = $value;
@@ -44,14 +44,6 @@ abstract class AbstractEnum implements EnumInterface
     {
         return new static($value, static::$choices);
     }
-
-    /**
-     * @return static
-     */
-    public static function getEmptyInstance()
-    {
-        return static::constructWoValue(static::$choices);
-    }
     
     /**
      * @param mixed $value
@@ -64,40 +56,26 @@ abstract class AbstractEnum implements EnumInterface
     }
 
     /**
-     * @param array $choices
-     * @return static
+     * @return array
      */
-    protected static function constructWoValue(array $choices)
+    public static function choices()
     {
-        $r = new \ReflectionClass(get_called_class());
-        /** @var static $self */
-        $self            = $r->newInstanceWithoutConstructor();
-        $self->valueList = $choices;
-
-        return $self;
+        return static::$choices;
     }
 
     /**
      * @return array
      */
-    public function choices()
+    public static function flipped()
     {
-        return $this->valueList;
-    }
-
-    /**
-     * @return array
-     */
-    public function flipped()
-    {
-        return $this->flip($this->valueList);
+        return self::flip(self::choices());
     }
 
     /**
      * @param array $choices
      * @return array
      */
-    protected function flip(array $choices)
+    public static function flip(array $choices)
     {
         $flipped = [];
         foreach($choices as $key => $label) {
@@ -112,9 +90,6 @@ abstract class AbstractEnum implements EnumInterface
      */
     public function is($value)
     {
-        if (is_null($this->value)) {
-            throw new \BadMethodCallException('no value defined. ');
-        }
         return $this->value === $this->mutate($value);
     }
 
@@ -122,9 +97,9 @@ abstract class AbstractEnum implements EnumInterface
      * @param string $value
      * @return bool
      */
-    public function isDefined($value)
+    public static function isDefined($value)
     {
-        return array_key_exists($value, $this->valueList);
+        return array_key_exists($value, self::choices());
     }
     
     /**
@@ -132,9 +107,6 @@ abstract class AbstractEnum implements EnumInterface
      */
     public function label()
     {
-        if (is_null($this->value)) {
-            throw new \BadMethodCallException('no value defined. ');
-        }
         return $this->valueList[$this->value];
     }
 
@@ -143,9 +115,6 @@ abstract class AbstractEnum implements EnumInterface
      */
     public function value()
     {
-        if (is_null($this->value)) {
-            throw new \BadMethodCallException('no value defined. ');
-        }
         return (string) $this->value;
     }
 
