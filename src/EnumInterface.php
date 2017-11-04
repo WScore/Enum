@@ -18,14 +18,16 @@ interface EnumInterface
     public static function choices();
 
     /**
+     * @param string $method
      * @return array
      */
-    public static function flipped();
+    public static function flipped($method = 'choices');
 
     /**
+     * @param string $method
      * @return array
      */
-    public static function keys();
+    public static function keys($method = 'choices');
 
     /**
      * @param array $choices

@@ -1,6 +1,7 @@
 <?php
 namespace tests\Auth;
 
+use Tests\Enum\Stubs\ActiveList;
 use Tests\Enum\Stubs\EnumList;
 
 require_once( dirname( __DIR__ ) . '/autoloader.php' );
@@ -77,5 +78,23 @@ class EnumTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($keys));
         $this->assertContains('enum', $keys);
         $this->assertContains('value', $keys);
+    }
+
+    /**
+     * @test
+     */
+    public function useNamedChoices()
+    {
+        $keys = ActiveList::keys();
+        $this->assertEquals(3, count($keys));
+
+        $keys = ActiveList::keys('userChoice');
+        $this->assertEquals(2, count($keys));
+
+        $keys = ActiveList::flipped();
+        $this->assertEquals(3, count($keys));
+
+        $keys = ActiveList::flipped('userChoice');
+        $this->assertEquals(2, count($keys));
     }
 }

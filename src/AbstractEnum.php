@@ -64,19 +64,21 @@ abstract class AbstractEnum implements EnumInterface
     }
 
     /**
+     * @param string $method
      * @return array
      */
-    public static function flipped()
+    public static function flipped($method = 'choices')
     {
-        return self::flip(self::choices());
+        return self::flip(static::$method());
     }
 
     /**
+     * @param string $method
      * @return array
      */
-    public static function keys()
+    public static function keys($method = 'choices')
     {
-        return array_keys(self::choices());
+        return array_keys(static::$method());
     }
 
     /**
