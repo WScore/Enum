@@ -66,4 +66,16 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     {
         EnumList::getEnum(EnumList::VALUE);
     }
+
+    /**
+     * @test
+     */
+    public function keys()
+    {
+        $keys = EnumList::keys();
+        $this->assertTrue(is_array($keys));
+        $this->assertEquals(2, count($keys));
+        $this->assertContains('enum', $keys);
+        $this->assertContains('value', $keys);
+    }
 }

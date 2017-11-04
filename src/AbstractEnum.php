@@ -30,7 +30,7 @@ abstract class AbstractEnum implements EnumInterface
     {
         $this->valueList = $choices ?: static::$choices;
         $value           = $this->mutate($value);
-        if (!isset($choices[$value])) {
+        if (!isset($this->valueList[$value])) {
             throw new \InvalidArgumentException(get_called_class() . ' has no such value: ' . $value);
         }
         $this->value = $value;
@@ -69,6 +69,14 @@ abstract class AbstractEnum implements EnumInterface
     public static function flipped()
     {
         return self::flip(self::choices());
+    }
+
+    /**
+     * @return array
+     */
+    public static function keys()
+    {
+        return array_keys(self::choices());
     }
 
     /**

@@ -23,6 +23,11 @@ interface EnumInterface
     public static function flipped();
 
     /**
+     * @return array
+     */
+    public static function keys();
+
+    /**
      * @param array $choices
      * @return array
      */
