@@ -7,8 +7,8 @@ interface EnumInterface
     // static methods
     // ------------------------------------------------------------------------
     /**
-     * a factory method for the enumerated class.  
-     * 
+     * a factory method for the enumerated class.
+     *
      * @param string $value
      * @return static
      */
@@ -16,14 +16,14 @@ interface EnumInterface
 
     /**
      * returns list of enumerated values as defined by static::$choices.
-     * 
+     *
      * @return array
      */
     public static function choices();
 
     /**
      * returns flipped array of choices(), i.e. keys and values are flipped.
-     * 
+     *
      * @param string $method
      * @return array
      */
@@ -31,7 +31,7 @@ interface EnumInterface
 
     /**
      * returns keys of choices().
-     * 
+     *
      * @param string $method
      * @return array
      */
@@ -39,7 +39,7 @@ interface EnumInterface
 
     /**
      * flips keys and values for an array.
-     * 
+     *
      * @param array $choices
      * @return array
      */
@@ -47,7 +47,7 @@ interface EnumInterface
 
     /**
      * returns if $value is defined in the static::$choices.
-     * 
+     *
      * @param string $value
      * @return bool
      */
@@ -66,21 +66,21 @@ interface EnumInterface
 
     /**
      * returns the label of the enum object using static::$choices.
-     * 
+     *
      * @return string
      */
     public function label();
 
     /**
      * returns the value of the enum object.
-     * 
+     *
      * @return string
      */
     public function value();
 
     /**
-     * returns the value of the enum object. same as value(). 
-     * 
+     * returns the value of the enum object. same as value().
+     *
      * @return string
      */
     public function __toString();

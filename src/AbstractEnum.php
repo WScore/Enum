@@ -44,7 +44,7 @@ abstract class AbstractEnum implements EnumInterface
     {
         return new static($value, static::$choices);
     }
-    
+
     /**
      * @param mixed $value
      * @return string
@@ -52,7 +52,7 @@ abstract class AbstractEnum implements EnumInterface
      */
     protected function mutate($value)
     {
-        return (string) $value;
+        return (string)$value;
     }
 
     /**
@@ -88,9 +88,10 @@ abstract class AbstractEnum implements EnumInterface
     public static function flip(array $choices)
     {
         $flipped = [];
-        foreach($choices as $key => $label) {
-            $flipped[$label] = (string) $key;
+        foreach ($choices as $key => $label) {
+            $flipped[$label] = (string)$key;
         }
+
         return $flipped;
     }
 
@@ -111,7 +112,7 @@ abstract class AbstractEnum implements EnumInterface
     {
         return array_key_exists($value, self::choices());
     }
-    
+
     /**
      * @return string
      */
@@ -125,7 +126,7 @@ abstract class AbstractEnum implements EnumInterface
      */
     public function value()
     {
-        return (string) $this->value;
+        return (string)$this->value;
     }
 
     /**
@@ -137,8 +138,8 @@ abstract class AbstractEnum implements EnumInterface
     }
 
     /**
-     * find value from a string. 
-     * searches for: key of static::$choices, value of static::$choices, and constant name. 
+     * find value from a string.
+     * searches for: key of static::$choices, value of static::$choices, and constant name.
      *
      * @param string $label
      * @return int|string
@@ -151,7 +152,7 @@ abstract class AbstractEnum implements EnumInterface
         }
         // search value as $choices's array. 
         if (in_array($label, static::$choices, true)) {
-            foreach(static::$choices as $value => $choice) {
+            foreach (static::$choices as $value => $choice) {
                 if ($choice === $label) {
                     return $value;
                 }
@@ -162,6 +163,6 @@ abstract class AbstractEnum implements EnumInterface
         if (defined($const)) {
             return constant($const);
         }
-        throw new \InvalidArgumentException("no such value for: ".$label);
+        throw new \InvalidArgumentException("no such value for: " . $label);
     }
 }

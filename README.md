@@ -9,7 +9,7 @@ MIT License
 ### Installation
 
 ```sh
-composer require "wscore/enum: ^0.2.0"
+composer require "wscore/enum: ^1.0"
 ```
 
 
@@ -21,7 +21,7 @@ Sample Code
 The intended way of creating a enumerated class is, 
 
 1. define constants,
-2. define static $choices array.
+2. define static `$choices` array.
 
 as in the example below. 
 
@@ -41,7 +41,7 @@ class EnumList extends AbstractEnum
 ```
 
 The `$choices` variable defines available values 
-with labels (i.e. human readable string). 
+along side with labels (i.e. human readable string). 
 
 ### get enumerated object 
 
@@ -55,12 +55,14 @@ $enum->label(); // enumerated
 $enum->is(EnumList::ENUM); // true
 ```
 
-### flipped enum list and keys
+### enum list and keys
 
-Some times, keys or flipped list of enumerated array is required 
-(for validation or Symfony/Form, for instance). 
+Use static methods such as, `choices()`, `keys()`, or `flipped()`, 
+to get the list of available enum values and keys, that may be 
+used for validating inputs.
 
 ```php
+$list = EnumList::choices(); // returns list of keys and labels. 
 $keys = EnumList::keys();    // returns keys of enumerated list. 
 $flip = EnumList::flipped(); // returns array of key/value flipped.
 ```
@@ -69,12 +71,10 @@ $flip = EnumList::flipped(); // returns array of key/value flipped.
 subset of choices
 -----------------
 
-In some use cases, subset of enumerated values maybe available 
-for choices.
- 
-For instance, active status may have 3 options for admin 
-but has only 2 options for the end-user, as shown in 
-the `ActiveList` class below. 
+In some use cases, you may need to restrict the selectable values. 
+For instance, the `ActiveList` class below, has 3 statuses 
+but may want to restrict to only 2 options for the end-user, 
+as defined in in `userChoice`.
 
 ```php
 class ActiveList extends AbstractEnum
@@ -131,7 +131,7 @@ class EnumList extends AbstractEnum
      * @param string $value
      * @return EnumList
      */
-    public static function getEnum($value)
+    public static function getUserEnum($value)
     {
         $choices = self::$choices;
         unset($choices[self::VALUE]);
@@ -143,5 +143,5 @@ class EnumList extends AbstractEnum
 then, the following code will throw an \InvalidArgumentException. 
 
 ```php
-$enum = EnumList::getEnum(EnumList::VALUE);
+$enum = EnumList::getUserEnum(EnumList::VALUE);
 ```
