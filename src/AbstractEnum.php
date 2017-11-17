@@ -28,7 +28,7 @@ abstract class AbstractEnum implements EnumInterface
      */
     public function __construct($value, array $choices = [])
     {
-        $this->valueList = $choices ?: static::$choices;
+        $this->valueList = $choices ?: static::choices();
         $value           = $this->mutate($value);
         if (!isset($this->valueList[$value])) {
             throw new \InvalidArgumentException(get_called_class() . ' has no such value: ' . $value);
@@ -42,7 +42,7 @@ abstract class AbstractEnum implements EnumInterface
      */
     public static function enum($value)
     {
-        return new static($value, static::$choices);
+        return new static($value, static::choices());
     }
 
     /**
@@ -147,12 +147,12 @@ abstract class AbstractEnum implements EnumInterface
     public static function findValue($label)
     {
         // search value as $choices's key. 
-        if (array_key_exists($label, static::$choices)) {
+        if (array_key_exists($label, static::choices())) {
             return $label;
         }
         // search value as $choices's array. 
-        if (in_array($label, static::$choices, true)) {
-            foreach (static::$choices as $value => $choice) {
+        if (in_array($label, static::choices(), true)) {
+            foreach (static::choices() as $value => $choice) {
                 if ($choice === $label) {
                     return $value;
                 }
